@@ -47,7 +47,7 @@ Try the live demo using GitHub Pages:
 Include the plugin JS file in your project:
 
 ```html
-<script src="src/suggestify.js"></script>
+<script src="suggestify.js"></script>
 ```
 
 ---
