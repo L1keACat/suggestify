@@ -1,10 +1,14 @@
 {
-  "name": "${PROJECT_NAME}",
+  "name": "suggestify",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "private": true
+  "description": "A lightweight JavaScript plugin for input suggestions",
+  "main": "src/suggestify.js",
+  "author": "l1keacat",
+  "license": "MIT",
+  "keywords": [
+    "suggestions",
+    "autocomplete",
+    "javascript",
+    "plugin"
+  ]
 }
