@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Suggestify plugin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div>
+        <h1><a href="https://github.com/L1keACat" target="_blank">Suggestify<span class="highlighted">.js</span></a></h1>
+        <input id="suggestify" type="text" autocomplete="off" placeholder="Enter any capital"/>
+    </div>
+
+<p class="author">Developed by <a class="highlighted" href="https://github.com/L1keACat" target="_blank">L1keACat</a></p>
+</body>
+
+<script type="text/javascript" src="../src/suggestify.js"></script>
+<script>
+    const capitals = "Moscow, Minsk, Kyiv, Vilnius, Warsaw, Berlin, Paris, Budapest, Kishinev, Ljubljana, Baku, " +
+        "Yerevan, Tbilisi, Istanbul, Podgorica, Madrid, Amsterdam, Oslo, Copenhagen, Stockholm, Lisbon, Vienna, Prague, " +
+        "Riga, Athens, Rome, Bratislava, Belgrade, Sofia, Bern, Brussels, Reykjavik, Tirana, Skopje, Zagreb, London, " +
+        "Helsinki, Tallinn, Bucharest, Nicosia, Dublin, Washington";
+
+    const suggestions = new Suggestify({
+        arrayInput: true,
+        fallbackOption: "fallbackOption",
+        maxSuggestions: 5,
+        selector: 'suggestify',
+        suggestOptions: capitals.split(', '),
+    });
+</script>
+</html>
