@@ -19,19 +19,18 @@ Supports multi-word suggestions, customizable array inputs, keyboard navigation,
 - [Usage Example](#usage-example)
 - [Plugin Parameters](#plugin-parameters)
 - [Keyboard Navigation](#keyboard-navigation)
-- [Recommended Repo Structure](#recommended-repo-structure)
 - [License](#license)
 
 ---
 
-## 🌐 Demo
+<h2 id="demo">🌐 Demo</h2>
 
 Try the live demo using GitHub Pages:  
 [Demo Link](https://l1keacat.github.io/suggestify/)
 
 ---
 
-## ✨ Features
+<h2 id="features">✨ Features</h2>
 
 - Show suggestions while typing in an input field
 - Supports multiple-word entries and optional whitespace in suggestions
@@ -43,7 +42,7 @@ Try the live demo using GitHub Pages:
 
 ---
 
-## 📦 Installation
+<h2 id="installation">📦 Installation</h2>
 
 Include the plugin JS file in your project:
 
@@ -53,7 +52,7 @@ Include the plugin JS file in your project:
 
 ---
 
-## ⚡ Usage Example
+<h2 id="usage-example">⚡ Usage Example</h2>
 
 ```html
 <input type="text" id="suggestify">
@@ -76,7 +75,7 @@ Include the plugin JS file in your project:
 
 ---
 
-## 📝 Plugin Parameters
+<h2 id="plugin-parameters">📝 Plugin Parameters</h2>
 
 | Option Name          | Type        | Default         | Description                                                                                   |
 | -------------------- | ----------- | --------------- | --------------------------------------------------------------------------------------------- |
@@ -93,7 +92,7 @@ Include the plugin JS file in your project:
 
 ---
 
-## ⌨️ Keyboard Navigation
+<h2 id="keyboard-navigation">⌨️ Keyboard Navigation</h2>
 
 **Arrow Up / Down:** Move selection in the suggestion list
 
@@ -101,7 +100,7 @@ Include the plugin JS file in your project:
 
 ---
 
-## 📜 License
+<h2 id="license">📜 License</h2>
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
