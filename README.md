@@ -15,9 +15,9 @@ Supports multi-word suggestions, customizable array inputs, keyboard navigation,
 
 - [Demo](#demo)
 - [Features](#features)
-- [Installation](#installation)
 - [Usage Example](#usage-example)
 - [Plugin Parameters](#plugin-parameters)
+- [Styling](#styling)
 - [Keyboard Navigation](#keyboard-navigation)
 - [License](#license)
 
@@ -25,8 +25,8 @@ Supports multi-word suggestions, customizable array inputs, keyboard navigation,
 
 <h2 id="demo">🌐 Demo</h2>
 
-Try the live demo using GitHub Pages:  
-[Demo Link](https://l1keacat.github.io/suggestify/)
+You can try Suggestify live on GitHub Pages:  
+👉 [Live Demo](https://l1keacat.github.io/suggestify/)
 
 ---
 
@@ -42,7 +42,7 @@ Try the live demo using GitHub Pages:
 
 ---
 
-<h2 id="installation">📦 Installation</h2>
+<h2 id="usage-example">📦 Usage Example</h2>
 
 Include the plugin JS file in your project:
 
@@ -50,9 +50,7 @@ Include the plugin JS file in your project:
 <script src="suggestify.js"></script>
 ```
 
----
-
-<h2 id="usage-example">⚡ Usage Example</h2>
+Initialize Suggestify:
 
 ```html
 <input type="text" id="suggestify">
@@ -72,6 +70,7 @@ Include the plugin JS file in your project:
   });
 </script>
 ```
+💡 *See the [🎨 Styling](#styling) section to learn how to customize the look of the suggestion list.*
 
 ---
 
@@ -89,6 +88,64 @@ Include the plugin JS file in your project:
 | `fallbackOption`     | string/null | `null`          | Value to insert if user navigates out of suggestions (optional).                              |
 | `postSelectFunction` | function    | `null`          | Callback function executed after a suggestion is selected. Receives selected tag as argument. |
 | `submitFunction`     | function    | `null`          | Callback executed when Enter is pressed without selecting a suggestion.                       |
+
+---
+
+<h2 id="styling">🎨 Styling</h2>
+
+Suggestify comes with **minimal default styles** to make the suggestion list look clean and usable out of the box.  
+These styles are deliberately simple and neutral, so you can easily override them in your own CSS if you need a custom look.
+
+### Default styles
+
+```css
+.suggestion-wrapper {
+    position: relative;
+
+    .suggestion-list {
+        position: absolute;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        visibility: hidden;
+        z-index: 99;
+        top: 110%;
+        opacity: 0;
+        background: #2e2e2e;
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+        border-radius: 0 0 5px 5px;
+        transition: all .2s;
+
+        &.visible {
+            visibility: visible;
+            top: 100%;
+            opacity: 1;
+        }
+
+        .suggestion-item {
+            cursor: pointer;
+            padding: 5px 10px;
+            transition: all .1s;
+
+            &:hover, &.selected {
+                background-color: coral;
+                color: white;
+            }
+
+            &:last-child {
+                border-radius: 0 0 5px 5px;
+            }
+        }
+    }
+}
+```
+
+### Tip
+
+- `.suggestion-wrapper` → container of the whole element (including input field)
+- `.suggestion-list` → container of the dropdown list
+- `.suggestion-item` → one item of the list
+- `.selected` → item currently highlighted with keyboard navigation
 
 ---
 
