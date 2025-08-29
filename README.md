@@ -66,7 +66,7 @@ Initialize Suggestify:
     caseSensitive: false,
     postSelectFunction: (tag) => console.log("Selected:", tag),
     submitFunction: () => console.log("Enter pressed"),
-    fallbackOption: null
+    fallbackOption: "fruit"
   });
 </script>
 ```
@@ -85,7 +85,7 @@ Initialize Suggestify:
 | `allowWhitespace`    | boolean     | `false`         | Allows suggestions containing whitespace characters.                                          |
 | `allowDuplicates`    | boolean     | `false`         | If `false`, prevents suggesting or inserting duplicate entries.                               |
 | `caseSensitive`      | boolean     | `false`         | If `true`, suggestion matching respects case.                                                 |
-| `fallbackOption`     | string/null | `null`          | Value to insert if user navigates out of suggestions (optional).                              |
+| `fallbackOption`     | string/null | `null`          | A custom value to insert when the user navigates upward past the first suggestion.            |
 | `postSelectFunction` | function    | `null`          | Callback function executed after a suggestion is selected. Receives selected tag as argument. |
 | `submitFunction`     | function    | `null`          | Callback executed when Enter is pressed without selecting a suggestion.                       |
 

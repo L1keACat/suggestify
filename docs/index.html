@@ -5,16 +5,23 @@
     <title>Suggestify plugin</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
-    <div>
-        <h1><a href="https://github.com/L1keACat" target="_blank">Suggestify<span class="highlighted">.js</span></a></h1>
-        <input id="suggestify" type="text" autocomplete="off" placeholder="Enter any capital"/>
-    </div>
+<div>
+    <h1>
+        <a href="https://github.com/L1keACat/suggestify" target="_blank">
+            Suggestify<span class="highlighted">.js</span>
+        </a>
+    </h1>
+    <input id="suggestify" type="text" autocomplete="off" placeholder="Enter any capital"/>
+</div>
 
-<p class="author">Developed by <a class="highlighted" href="https://github.com/L1keACat" target="_blank">L1keACat</a></p>
+<p class="author">
+    Developed by <a class="highlighted" href="https://github.com/L1keACat" target="_blank">L1keACat</a>
+</p>
 </body>
 
 <script type="text/javascript" src="suggestify.min.js"></script>
@@ -26,7 +33,6 @@
 
     const suggestions = new Suggestify({
         arrayInput: true,
-        fallbackOption: "fallbackOption",
         maxSuggestions: 5,
         selector: 'suggestify',
         suggestOptions: capitals.split(', '),
