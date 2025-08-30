@@ -6,6 +6,8 @@ _Smarter Input, Faster Typing_
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=white&labelColor=gray)]()
 [![GitHub stars](https://img.shields.io/github/stars/l1keacat/suggestify?style=social)]()
 
+📥 [Download the latest release](https://github.com/l1keacat/suggestify/releases)
+
 A lightweight, flexible JavaScript plugin for input suggestions/autocomplete.  
 Supports multi-word suggestions, customizable array inputs, keyboard navigation, and optional callbacks.
 
