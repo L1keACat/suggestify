@@ -11,12 +11,32 @@
 </head>
 <body>
 <div>
-    <h1>
-        <a href="https://github.com/L1keACat/suggestify" target="_blank">
-            Suggestify<span class="highlighted">.js</span>
-        </a>
-    </h1>
-    <input id="suggestify" type="text" autocomplete="off" placeholder="Enter any capital"/>
+    <div class="header">
+        <h1>
+            <a href="https://github.com/L1keACat/suggestify" target="_blank">
+                Suggestify<span class="highlighted">.js</span>
+            </a>
+        </h1>
+        <h4 class="subheader"><span class="highlighted">Smarter</span> Input, <span class="highlighted">Faster</span>
+            Typing</h4>
+    </div>
+    <div class="content">
+        <div class="options">
+            <div class="option">
+                <input type="checkbox" id="allowWhitespace" name="allowWhitespace"/>
+                <label for="allowWhitespace">Allow whitespace</label>
+            </div>
+            <div class="option">
+                <input type="checkbox" id="matchPrefix" name="matchPrefix"/>
+                <label for="matchPrefix">Match prefix only</label>
+            </div>
+            <div class="option">
+                <input type="checkbox" id="matchWordStart" name="matchWordStart"/>
+                <label for="matchWordStart">Match word start</label>
+            </div>
+        </div>
+        <input id="suggestify" type="text" autocomplete="off" placeholder="Enter any capital"/>
+    </div>
 </div>
 
 <p class="author">
@@ -26,16 +46,235 @@
 
 <script type="text/javascript" src="suggestify.min.js"></script>
 <script>
-    const capitals = "Moscow, Minsk, Kyiv, Vilnius, Warsaw, Berlin, Paris, Budapest, Kishinev, Ljubljana, Baku, " +
-        "Yerevan, Tbilisi, Istanbul, Podgorica, Madrid, Amsterdam, Oslo, Copenhagen, Stockholm, Lisbon, Vienna, Prague, " +
-        "Riga, Athens, Rome, Bratislava, Belgrade, Sofia, Bern, Brussels, Reykjavik, Tirana, Skopje, Zagreb, London, " +
-        "Helsinki, Tallinn, Bucharest, Nicosia, Dublin, Washington";
+    const allowWhitespaceCheckbox = document.getElementById('allowWhitespace');
+    const matchPrefixCheckbox = document.getElementById('matchPrefix');
+    const matchWordStartCheckbox = document.getElementById('matchWordStart');
+
+    const capitals = [
+        "Abu Dhabi",
+        "Abuja",
+        "Accra",
+        "Addis Ababa",
+        "Algiers",
+        "Amman",
+        "Amsterdam",
+        "Andorra la Vella",
+        "Ankara",
+        "Antananarivo",
+        "Apia",
+        "Ashgabat",
+        "Asmara",
+        "Astana",
+        "Asuncion",
+        "Athens",
+        "Baghdad",
+        "Baku",
+        "Bamako",
+        "Bandar Seri Begawan",
+        "Bangkok",
+        "Bangui",
+        "Banjul",
+        "Basseterre",
+        "Beijing",
+        "Beirut",
+        "Belfast",
+        "Belgrade",
+        "Belmopan",
+        "Berlin",
+        "Bern",
+        "Bishkek",
+        "Bissau",
+        "Bogota",
+        "Brasilia",
+        "Bratislava",
+        "Brazzaville",
+        "Bridgetown",
+        "Brussels",
+        "Bucharest",
+        "Budapest",
+        "Buenos Aires",
+        "Cairo",
+        "Canberra",
+        "Caracas",
+        "Cardiff",
+        "Castries",
+        "Chisinau",
+        "Ciudad de la Paz",
+        "Conakry",
+        "Copenhagen",
+        "Dakar",
+        "Damascus",
+        "Dhaka",
+        "Dili",
+        "Djibouti",
+        "Dodoma",
+        "Doha",
+        "Dublin",
+        "Dushanbe",
+        "Edinburgh",
+        "Freetown",
+        "Funafuti",
+        "Gaborone",
+        "Georgetown",
+        "Gitega",
+        "Guatemala City",
+        "Hanoi",
+        "Harare",
+        "Havana",
+        "Helsinki",
+        "Honiara",
+        "Islamabad",
+        "Jakarta",
+        "Jerusalem",
+        "Juba",
+        "Kabul",
+        "Kampala",
+        "Kathmandu",
+        "Khartoum",
+        "Kigali",
+        "Kingston",
+        "Kingstown",
+        "Kinshasa",
+        "Kuala Lumpur",
+        "Kuwait City",
+        "Kyiv or Kiev",
+        "Sucre",
+        "Libreville",
+        "Lilongwe",
+        "Lima",
+        "Lisbon",
+        "Ljubljana",
+        "Lome",
+        "London",
+        "London",
+        "Luanda",
+        "Lusaka",
+        "Luxembourg",
+        "Madrid",
+        "Majuro",
+        "Male",
+        "Managua",
+        "Manama",
+        "Manila",
+        "Maputo",
+        "Maseru",
+        "Mbabane",
+        "Mexico City",
+        "Minsk",
+        "Mogadishu",
+        "Monaco",
+        "Monrovia",
+        "Montevideo",
+        "Moroni",
+        "Moscow",
+        "Muscat",
+        "N'Djamena",
+        "Nairobi",
+        "Nassau",
+        "Nay Pyi Taw",
+        "New Delhi",
+        "Ngerulmud",
+        "Niamey",
+        "Nicosia",
+        "Nouakchott",
+        "Nuku'alofa",
+        "Oslo",
+        "Ottawa",
+        "Ouagadougou",
+        "Palikir",
+        "Panama City",
+        "Paramaribo",
+        "Paris",
+        "Phnom Penh",
+        "Podgorica",
+        "Port au Prince",
+        "Port Louis",
+        "Port Moresby",
+        "Port of Spain",
+        "Port Vila",
+        "Porto Novo",
+        "Prague",
+        "Praia",
+        "Pretoria",
+        "Bloemfontein",
+        "Cape Town",
+        "Pristina",
+        "Pyongyang",
+        "Quito",
+        "Rabat",
+        "Reykjavik",
+        "Riga",
+        "Riyadh",
+        "Rome",
+        "Roseau",
+        "Saint George's",
+        "Saint John's",
+        "San Jose",
+        "San Marino",
+        "San Salvador",
+        "Sana'a",
+        "Santiago",
+        "Santo Domingo",
+        "Sao Tome",
+        "Sarajevo",
+        "Seoul",
+        "Singapore",
+        "Skopje",
+        "Sofia",
+        "Sri Jayawardenapura Kotte",
+        "Stockholm",
+        "Suva",
+        "Taipei",
+        "Tallinn",
+        "Tarawa Atoll",
+        "Tashkent",
+        "Tbilisi",
+        "Tegucigalpa",
+        "Tehran",
+        "Thimphu",
+        "Tirana",
+        "Tokyo",
+        "Tripoli",
+        "Tunis",
+        "Ulaanbaatar",
+        "Vaduz",
+        "Valletta",
+        "Vatican City",
+        "Victoria",
+        "Vienna",
+        "Vientiane",
+        "Vilnius",
+        "Warsaw",
+        "Washington D.C.",
+        "Wellington",
+        "Windhoek",
+        "Yamoussoukro",
+        "Yaounde",
+        "Yerevan",
+        "Zagreb"];
 
     const suggestions = new Suggestify({
         arrayInput: true,
         maxSuggestions: 5,
         selector: 'suggestify',
-        suggestOptions: capitals.split(', '),
+        suggestOptions: capitals
+    });
+
+    allowWhitespaceCheckbox.addEventListener('change', function (event) {
+        suggestions._options.allowWhitespace = event.target.checked;
+    });
+
+    matchPrefixCheckbox.addEventListener('change', function (event) {
+        suggestions._options.matchPrefix = event.target.checked;
+    });
+
+    matchWordStartCheckbox.addEventListener('change', function (event) {
+        let flag = event.target.checked;
+        if (flag && !allowWhitespaceCheckbox.checked) {
+            allowWhitespaceCheckbox.checked = flag;
+            suggestions._options.allowWhitespace = flag;
+        }
+        suggestions._options.matchWordStart = event.target.checked;
     });
 </script>
 </html>
