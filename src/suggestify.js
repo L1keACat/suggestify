@@ -8,6 +8,7 @@ class Suggestify {
         caseSensitive: false,
         fallbackOption: null,
         matchPrefix: false,
+        matchWordStart: false,
         maxSuggestions: 3,
         postSelectFunction: null,
         selector: 'suggestions',
@@ -158,9 +159,18 @@ class Suggestify {
                     const source = this.options.caseSensitive ? tag : tag.toLowerCase();
                     const query = this.options.caseSensitive ? currentWord : currentWord.toLowerCase();
 
-                    return this.options.matchPrefix
-                        ? source.startsWith(query)
-                        : source.includes(query);
+                    if (source.startsWith(query)) return true;
+
+                    if (this.options.matchWordStart && this.options.allowWhitespace) {
+                        const words = source.split(/\s+/);
+                        if (words.some(word => word.startsWith(query))) return true;
+                    }
+
+                    if (!this.options.matchPrefix) {
+                        return source.includes(query);
+                    }
+
+                    return false;
                 });
 
             if (!this.options.allowDuplicates) {
@@ -173,11 +183,22 @@ class Suggestify {
                 const aVal = this.options.caseSensitive ? a : a.toLowerCase();
                 const bVal = this.options.caseSensitive ? b : b.toLowerCase();
 
-                const aStarts = aVal.startsWith(query);
-                const bStarts = bVal.startsWith(query);
+                const getPriority = (val) => {
+                    if (val.startsWith(query)) return 0;
 
-                if (aStarts && !bStarts) return -1;
-                if (!aStarts && bStarts) return 1;
+                    if (this.options.matchWordStart && this.options.allowWhitespace) {
+                        if (val.split(/\s+/).some(word => word.startsWith(query))) {
+                            return 1;
+                        }
+                    }
+
+                    return 2;
+                };
+
+                const pa = getPriority(aVal);
+                const pb = getPriority(bVal);
+
+                if (pa !== pb) return pa - pb;
 
                 return aVal.localeCompare(bVal);
             });
