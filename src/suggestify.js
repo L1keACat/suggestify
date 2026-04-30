@@ -7,6 +7,7 @@ class Suggestify {
         arrayDelimiter: ", ",
         caseSensitive: false,
         fallbackOption: null,
+        matchPrefix: false,
         maxSuggestions: 3,
         postSelectFunction: null,
         selector: 'suggestions',
@@ -28,7 +29,10 @@ class Suggestify {
     #suggestionList = null;
     #inputField = null;
 
-    #onInput = (e) => { this.#saveUserInput(); this.#showSuggestions(e); }
+    #onInput = (e) => {
+        this.#saveUserInput();
+        this.#showSuggestions(e);
+    }
     #onKeyDown = (e) => this.#keyboardShortcuts(e);
     #onClick = (e) => this.#showSuggestions(e);
 
@@ -150,13 +154,33 @@ class Suggestify {
             this.#showSuggestionList();
 
             let filteredTags = this.options.suggestOptions
-                .filter(tag => this.options.caseSensitive
-                    ? tag.startsWith(currentWord)
-                    : tag.toLowerCase().startsWith(currentWord.toLowerCase()));
+                .filter(tag => {
+                    const source = this.options.caseSensitive ? tag : tag.toLowerCase();
+                    const query = this.options.caseSensitive ? currentWord : currentWord.toLowerCase();
+
+                    return this.options.matchPrefix
+                        ? source.startsWith(query)
+                        : source.includes(query);
+                });
 
             if (!this.options.allowDuplicates) {
                 filteredTags = filteredTags.filter(tag => !insertedTags.includes(tag));
             }
+
+            const query = this.options.caseSensitive ? currentWord : currentWord.toLowerCase();
+
+            filteredTags = filteredTags.sort((a, b) => {
+                const aVal = this.options.caseSensitive ? a : a.toLowerCase();
+                const bVal = this.options.caseSensitive ? b : b.toLowerCase();
+
+                const aStarts = aVal.startsWith(query);
+                const bStarts = bVal.startsWith(query);
+
+                if (aStarts && !bStarts) return -1;
+                if (!aStarts && bStarts) return 1;
+
+                return aVal.localeCompare(bVal);
+            });
 
             filteredTags = filteredTags.slice(0, this.options.maxSuggestions);
 
@@ -165,15 +189,29 @@ class Suggestify {
                 filteredTags.forEach(tag => {
                     let listItem = document.createElement("li");
                     listItem.classList.add('suggestion-item');
-                    let suggestedTag = "<b>" + tag.substring(0, currentWord.length) + "</b>";
-                    suggestedTag += tag.substring(currentWord.length);
+
+                    let displayTag = tag;
+                    let source = this.options.caseSensitive ? tag : tag.toLowerCase();
+                    let query = this.options.caseSensitive ? currentWord : currentWord.toLowerCase();
+
+                    const index = source.indexOf(query);
+
+                    if (index !== -1) {
+                        displayTag =
+                            tag.substring(0, index) +
+                            "<b>" + tag.substring(index, index + currentWord.length) + "</b>" +
+                            tag.substring(index + currentWord.length);
+                    }
+
                     listItem.addEventListener('click', (event) => {
                         this.#selectSuggestion(tag);
                         event.stopPropagation();
                     });
-                    listItem.innerHTML = suggestedTag;
+
+                    listItem.innerHTML = displayTag;
                     this.#suggestionList.append(listItem);
                 });
+
                 this.#currentSelection = 1;
                 this.#handleSelection();
             } else {
