@@ -115,7 +115,7 @@ class Suggestify {
     }
 
     #getWord(s, pos) {
-        const charPattern = this.options.allowWhitespace ? '[a-zA-Z0-9\\s-_]' : '[a-zA-Z0-9-_]';
+        const charPattern = this.options.allowWhitespace ? '[a-zA-Z0-9\\s-_\'’]' : '[a-zA-Z0-9-_\'’]';
         const before = s.slice(0, pos).match(new RegExp(`${charPattern}+$`));
         const after = s.slice(pos).match(new RegExp(`^${charPattern}+`));
         return [(before?.[0] || ''), (after?.[0] || '')].join('');
