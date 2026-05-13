@@ -29,13 +29,18 @@ class Suggestify {
     #wrapper = null;
     #suggestionList = null;
     #inputField = null;
+    #mirrorField = null;
 
     #onInput = (e) => {
         this.#saveUserInput();
         this.#showSuggestions(e);
+        this.#updateSelectionListPosition();
     }
     #onKeyDown = (e) => this.#keyboardShortcuts(e);
-    #onClick = (e) => this.#showSuggestions(e);
+    #onClick = (e) => {
+        this.#showSuggestions(e);
+        this.#updateSelectionListPosition();
+    }
 
     constructor(options) {
         this._options = structuredClone(this.#defaults);
@@ -84,9 +89,14 @@ class Suggestify {
     #buildPlugin() {
         this.#wrapper = document.createElement('div');
         this.#wrapper.className = 'suggestion-wrapper';
+
         this.#suggestionList = document.createElement('ul');
         this.#suggestionList.className = 'suggestion-list';
         this.#wrapper.append(this.#suggestionList);
+
+        this.#mirrorField = document.createElement('div');
+        this.#wrapper.appendChild(this.#mirrorField);
+
         this.#targetElement.before(this.#wrapper);
         this.#wrapper.prepend(this.#targetElement);
     }
@@ -243,6 +253,39 @@ class Suggestify {
         }
     }
 
+    #getCaretXPosition() {
+        const style = window.getComputedStyle(this.#inputField);
+
+        const properties = [
+            'border',
+            'font',
+            'fontSize',
+            'fontFamily',
+            'fontWeight',
+            'letterSpacing',
+            'paddingLeft',
+            'border',
+            'boxSizing',
+            'textTransform'
+        ];
+
+        properties.forEach(prop => {
+            this.#mirrorField.style[prop] = style[prop];
+        });
+
+        this.#mirrorField.style.position = 'absolute';
+        this.#mirrorField.style.visibility = 'hidden';
+        this.#mirrorField.style.whiteSpace = 'pre';
+
+        const caretPos = this.#inputField.selectionStart;
+
+        this.#mirrorField.textContent = this.#inputField.value.substring(0, caretPos);
+
+        const textWidth = this.#mirrorField.getBoundingClientRect().width;
+
+        return textWidth - this.#inputField.scrollLeft;
+    }
+
     #handleSelection(event) {
         this.#resetSelectedChildrenState();
         if (this.#currentSelection === -1 && this.options.fallbackOption) {
@@ -258,7 +301,23 @@ class Suggestify {
         }
     }
 
+    #updateSelectionListPosition() {
+        const caretX = this.#getCaretXPosition();
+
+        const maxLeft = this.#wrapper.offsetWidth - this.#suggestionList.offsetWidth;
+
+        const finalLeft = Math.min(caretX, maxLeft);
+
+        this.#suggestionList.style.left = `${finalLeft}px`;
+    }
+
     #showSuggestionList() {
+        if (!this.#suggestionList.classList.contains('visible')) {
+            this.#suggestionList.style.transition = 'left 0s, opacity .2s, top .2s';
+            setTimeout(() => {
+                this.#suggestionList.style.transition = '';
+            }, 200);
+        }
         this.#suggestionList.classList.add('visible');
     }
 
