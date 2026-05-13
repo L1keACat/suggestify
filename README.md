@@ -37,6 +37,7 @@ You can try Suggestify live on GitHub Pages:
 
 - Show suggestions while typing in an input field
 - Supports multiple-word entries and optional whitespace in suggestions
+- Unicode support for international characters (e.g. café, naïve, привет, こんにちは)
 - Optional prevention of duplicate entries
 - Configurable array input with custom delimiter
 - Keyboard navigation: Arrow Up/Down, Enter
