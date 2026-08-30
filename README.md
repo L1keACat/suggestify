@@ -172,6 +172,7 @@ look.
   cursor: pointer;
   padding: 5px 10px;
   transition: all .1s;
+  white-space: nowrap
 }
 
 .suggestion-item:hover, .suggestion-item.selected {
