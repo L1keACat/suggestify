@@ -3,6 +3,7 @@ class Suggestify {
     #defaults = {
         allowDuplicates: false,
         allowWhitespace: false,
+        allowedCharacters: "'’-_:",
         arrayInput: false,
         arrayDelimiter: ", ",
         caseSensitive: false,
@@ -114,10 +115,16 @@ class Suggestify {
         }
     }
 
+    #escapeRegexCharacterClass(value) {
+        return value.replace(/[\\^$.*+?()[\]{}|/-]/g, '\\$&');
+    }
+
     #getWord(s, pos) {
+        const allowedCharacters = this.#escapeRegexCharacterClass(this.options.allowedCharacters);
+
         const charPattern = this.options.allowWhitespace
-            ? "[\\p{L}\\p{N}\\s'’_-]"
-            : "[\\p{L}\\p{N}'’_-]";
+            ? `[\\p{L}\\p{N}\\s${allowedCharacters}]`
+            : `[\\p{L}\\p{N}${allowedCharacters}]`;
 
         const before = s
             .slice(0, pos)

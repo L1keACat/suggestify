@@ -38,6 +38,7 @@ You can try Suggestify live on GitHub Pages:
 - Show suggestions while typing in an input field
 - Supports multiple-word entries and optional whitespace in suggestions
 - Unicode support for international characters (e.g. café, naïve, привет, こんにちは)
+- Customizable allowed characters for word/token detection
 - Optional prevention of duplicate entries
 - Configurable array input with custom delimiter
 - Keyboard navigation: Arrow Up/Down, Enter
@@ -68,6 +69,7 @@ Initialize Suggestify:
         arrayDelimiter: ", ",
         allowWhitespace: true,
         allowDuplicates: false,
+        allowedCharacters: "'’-_",
         caseSensitive: false,
         matchPrefix: false,
         matchWordStart: true,
@@ -121,6 +123,7 @@ When multiple modes are enabled, results are sorted by priority:
 | `arrayDelimiter`     | string      | `", "`          | Delimiter used when `arrayInput` is `true`. Must not be a whitespace character.                                             |
 | `allowWhitespace`    | boolean     | `false`         | Allows suggestions containing whitespace characters.                                                                        |
 | `allowDuplicates`    | boolean     | `false`         | If `false`, prevents suggesting or inserting duplicate entries.                                                             |
+| `allowedCharacters`  | string      | `"'’-_:"`       | Additional characters treated as part of a word when determining the current input token.                                   |
 | `caseSensitive`      | boolean     | `false`         | If `true`, suggestion matching respects case.                                                                               |
 | `fallbackOption`     | string/null | `null`          | A custom value to insert when the user navigates upward past the first suggestion.                                          |
 | `matchPrefix`        | boolean     | `false`         | If `true`, matches suggestions that start with the input value (prefix match).                                              |
