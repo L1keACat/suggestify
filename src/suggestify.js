@@ -315,7 +315,7 @@ class Suggestify {
 
         const maxLeft = this.#wrapper.offsetWidth - this.#suggestionList.offsetWidth;
 
-        const finalLeft = Math.min(caretX, maxLeft);
+        const finalLeft = Math.max(0, Math.min(caretX, maxLeft));
 
         this.#suggestionList.style.left = `${finalLeft}px`;
     }
